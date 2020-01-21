@@ -238,10 +238,28 @@ class SawyerPickAndPlaceEnv(SawyerXYZEnv):
         self._reset_hand()
         task = self.sample_task()
         self._state_goal = np.array(task['goal'])
+        print(self._state_goal)
         self.obj_init_pos = self.adjust_initObjPos(task['obj_init_pos'])
+        first_obj_init_pos = self.obj_init_pos.copy()
         self.obj_init_angle = task['obj_init_angle']
         self.objHeight = self.data.get_geom_xpos('objGeom')[2]
         self.heightTarget = self.objHeight + self.liftThresh
+        
+        goal_pos = np.random.uniform(
+                self.hand_and_obj_space.low,
+                self.hand_and_obj_space.high,
+                size=(self.hand_and_obj_space.low.size),
+            )
+        while np.linalg.norm(self._state_goal[:2] - goal_pos[-2:]) < 0.1:
+            goal_pos = np.random.uniform(
+                self.hand_and_obj_space.low,
+                self.hand_and_obj_space.high,
+                size=(self.hand_and_obj_space.low.size),
+            )
+        
+        self.obj_init_pos = np.concatenate((goal_pos[-2:], self.obj_init_pos[-1]))
+
+        '''
         if self.random_init:
             goal_pos = np.random.uniform(
                 self.hand_and_obj_space.low,
@@ -256,6 +274,7 @@ class SawyerPickAndPlaceEnv(SawyerXYZEnv):
                 )
             self._state_goal = goal_pos[:3]
             self.obj_init_pos = np.concatenate((goal_pos[-2:], self.obj_init_pos[-1]))
+        '''
         self._set_goal_marker(self._state_goal)
         self._set_obj_xyz(self.obj_init_pos)
         #self._set_obj_xyz_quat(self.obj_init_pos, self.obj_init_angle)
