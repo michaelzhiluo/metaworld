@@ -181,7 +181,7 @@ class SawyerXYZEnv(SawyerMocapBase, metaclass=abc.ABCMeta):
         return [self.goal_space.sample() for _ in range(batch_size)]
     
     def set_exact_goal(self, goal):
-        return self.goal=goal
+        self.goal=goal
     
     def set_goal_(self, goal):
         if self.discrete_goal_space is not None:

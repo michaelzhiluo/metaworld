@@ -263,7 +263,7 @@ class SawyerReachPushPickPlaceEnv(SawyerXYZEnv):
         self.obj_init_angle = self.init_config['obj_init_angle']
         self.objHeight = self.data.get_geom_xpos('objGeom')[2]
         self.heightTarget = self.objHeight + self.liftThresh
-        
+        '''
         goal_pos = np.random.uniform(
                 self.obj_and_goal_space.low,
                 self.obj_and_goal_space.high,
@@ -280,7 +280,7 @@ class SawyerReachPushPickPlaceEnv(SawyerXYZEnv):
             self.obj_init_pos = np.concatenate((goal_pos[:2], [self.obj_init_pos[-1]]))
         else:
             self.obj_init_pos = goal_pos[:3]
-
+        '''
 
 
         ''' if self.random_init:
