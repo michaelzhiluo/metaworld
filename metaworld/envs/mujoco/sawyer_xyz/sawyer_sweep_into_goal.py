@@ -206,6 +206,7 @@ class SawyerSweepIntoGoalEnv(SawyerXYZEnv):
         self.obj_init_pos = self.adjust_initObjPos(self.init_config['obj_init_pos'])
         self.obj_init_angle = self.init_config['obj_init_angle']
         self.objHeight = self.data.get_geom_xpos('objGeom')[2]
+        '''
         if self.random_init:
             goal_pos = np.random.uniform(
                 self.obj_and_goal_space.low,
@@ -219,6 +220,7 @@ class SawyerSweepIntoGoalEnv(SawyerXYZEnv):
                     size=(self.obj_and_goal_space.low.size),
                 )
             self.obj_init_pos = np.concatenate((goal_pos[:2], [self.obj_init_pos[-1]]))
+        '''
         self._set_goal_marker(self._state_goal)
         self._set_obj_xyz(self.obj_init_pos)
         #self._set_obj_xyz_quat(self.obj_init_pos, self.obj_init_angle)
